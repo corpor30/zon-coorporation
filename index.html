@@ -5,31 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zon Corporation Rwanda - Powering Rwanda's Homes & Businesses</title>
     <meta name="description" content="Quality LED Lighting, Solar Products & IT Accessories in Kigali, Rwanda. Fast delivery.">
+    <link rel="icon" type="image/png" href="/logo.png">
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="assets/css/index.css">
+    <style>
+    .hero-carousel { position: relative; width: 100%; max-width: 500px; aspect-ratio: 1/1; border-radius: 20px; overflow: hidden; box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 40px 80px rgba(0,0,0,0.5), 0 0 120px rgba(108,92,231,0.4); animation: floatProduct 7s ease-in-out infinite; margin: 0 auto; background: linear-gradient(135deg, #6C5CE7, #FF6B6B); }
+    .hero-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.2s ease; z-index: 1; }
+    .hero-slide.active { opacity: 1; z-index: 2; }
+    .hero-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; padding: 8px 14px; background: rgba(11,13,23,0.55); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 999px; z-index: 10; }
+    .hero-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); border: none; cursor: pointer; padding: 0; transition: all 0.3s ease; }
+    .hero-dot.active { background: white; width: 24px; border-radius: 999px; }
+    .hero-dot:hover { background: rgba(255,255,255,0.8); }
+    .brand-logo { border-radius: 12px; box-shadow: 0 4px 16px rgba(108, 92, 231, 0.15); background: white; padding: 2px; }
+
+    /* Navbar 3-column grid */
+    .nav-grid {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 1rem;
+    }
+    .nav-grid .nav-left { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; justify-self: start; }
+    .nav-grid .nav-center { display: none; align-items: center; gap: 2rem; justify-self: center; }
+    .nav-grid .nav-right { display: flex; align-items: center; gap: 0.75rem; justify-self: end; }
+    @media (min-width: 768px) { .nav-grid .nav-center { display: flex; } }
+
+    #lang-toggle { display: inline-flex; background: #F4F4F8; border-radius: 999px; padding: 3px; gap: 2px; }
+    .lang-btn { border: none; background: transparent; padding: 6px 14px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; color: #78716C; cursor: pointer; transition: all 0.2s ease; font-family: Inter, sans-serif; }
+    .lang-btn:hover { color: #6C5CE7; }
+    .lang-btn.active { background: white; color: #6C5CE7; box-shadow: 0 2px 8px rgba(11,13,23,.08); }
+    @media (max-width: 768px) { .lang-btn { padding: 5px 10px; font-size: 0.7rem; } }
+    </style>
 </head>
 <body class="bg-aura-light min-h-screen flex flex-col">
 
-    <!-- ===== NAVBAR ===== -->
-    <nav class="glass-nav py-4">
-        <div class="container-zon flex justify-between items-center">
-            <div onclick="navigate('home')" class="flex items-center gap-3 cursor-pointer">
-                <div class="w-11 h-11 rounded-full bg-[var(--zon-primary)] flex items-center justify-center text-white font-bold text-xl shadow-lg">Z</div>
+    <nav class="glass-nav">
+        <div class="container-zon nav-grid">
+            <!-- LEFT: Logo -->
+            <div class="nav-left" onclick="navigate('home')">
+                <img src="/logo.png" alt="ZON Corporation" class="brand-logo w-12 h-12 object-contain">
                 <div>
-                    <h1 class="text-lg font-bold text-[var(--zon-secondary)] leading-none tracking-wide">ZON CORPORATION</h1>
-                    <p class="text-[10px] text-[var(--zon-primary)] font-bold tracking-[0.2em] uppercase">Rwanda Ltd</p>
+                    <h1 class="text-base md:text-lg font-bold text-[var(--zon-secondary)] leading-none tracking-wide whitespace-nowrap" style="font-family: var(--font-display);">ZON CORPORATION</h1>
+                    <p class="text-[10px] text-[#6C5CE7] font-bold tracking-[0.2em] uppercase">Rwanda Ltd</p>
                 </div>
             </div>
-            
-            <div class="hidden md:flex items-center gap-8">
+
+            <!-- CENTER: Nav links -->
+            <div class="nav-center">
                 <span data-nav="home" onclick="navigate('home')" class="nav-link">Home</span>
                 <span data-nav="shop" onclick="navigate('shop')" class="nav-link">Shop</span>
                 <span data-nav="about" onclick="navigate('about')" class="nav-link">About</span>
                 <span data-nav="contact" onclick="navigate('contact')" class="nav-link">Contact</span>
             </div>
 
-            <div class="flex items-center gap-4">
+            <!-- RIGHT: Toggle + Cart + Mobile menu button -->
+            <div class="nav-right">
+                <div id="lang-toggle">
+                    <button class="lang-btn active" data-lang="en">EN</button>
+                    <button class="lang-btn" data-lang="rw">RW</button>
+                </div>
                 <div onclick="navigate('cart')" class="relative p-2 cursor-pointer text-gray-700 hover:text-[var(--zon-primary)] transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                     <span class="cart-count absolute top-0 right-0 bg-[var(--zon-primary)] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
@@ -41,41 +76,58 @@
         </div>
     </nav>
 
-    <!-- ===== MOBILE MENU ===== -->
-    <div id="mobile-menu" class="mobile-menu md:hidden">
-        <span onclick="navigate('home')" class="block">Home</span>
-        <span onclick="navigate('shop')" class="block">Shop</span>
-        <span onclick="navigate('about')" class="block">About</span>
-        <span onclick="navigate('contact')" class="block">Contact</span>
-        <span onclick="navigate('cart')" class="block">Cart</span>
+    <div class="marquee">
+        <div class="marquee-track">
+            <span class="marquee-item"><span class="dot">●</span> Same-Day Delivery in Kigali</span>
+            <span class="marquee-item"><span class="dot">●</span> Wholesale Pricing Available</span>
+            <span class="marquee-item"><span class="dot">●</span> 1-2 Year Warranty on All Products</span>
+            <span class="marquee-item"><span class="dot">●</span> Genuine Electronics Guaranteed</span>
+            <span class="marquee-item"><span class="dot">●</span> Gisozi, Kigali, Rwanda</span>
+            <span class="marquee-item"><span class="dot">●</span> Follow @zoncorporationrwanda</span>
+            <span class="marquee-item"><span class="dot">●</span> Same-Day Delivery in Kigali</span>
+            <span class="marquee-item"><span class="dot">●</span> Wholesale Pricing Available</span>
+            <span class="marquee-item"><span class="dot">●</span> 1-2 Year Warranty on All Products</span>
+            <span class="marquee-item"><span class="dot">●</span> Genuine Electronics Guaranteed</span>
+            <span class="marquee-item"><span class="dot">●</span> Gisozi, Kigali, Rwanda</span>
+            <span class="marquee-item"><span class="dot">●</span> Follow @zoncorporationrwanda</span>
+        </div>
     </div>
 
-    <!-- =================================================================
-         PAGE: HOME
-    ================================================================== -->
+    <div id="mobile-menu" class="mobile-menu md:hidden">
+        <span onclick="navigate('home')">Home</span>
+        <span onclick="navigate('shop')">Shop</span>
+        <span onclick="navigate('about')">About</span>
+        <span onclick="navigate('contact')">Contact</span>
+        <span onclick="navigate('cart')">Cart</span>
+    </div>
+
     <div id="page-home" class="page flex-1">
-        <header class="container-zon mt-8">
-            <div class="bg-aura-dark rounded-3xl p-8 md:p-16 relative overflow-hidden noise-overlay">
-                <div class="grid md:grid-cols-2 gap-10 items-center relative z-10">
+        <header class="container-zon mt-6">
+            <div class="hero-shell p-8 md:p-14">
+                <div class="hero-orb hero-orb-1"></div>
+                <div class="hero-orb hero-orb-2"></div>
+                <div class="hero-orb hero-orb-3"></div>
+                <div class="grid-pattern"></div>
+                <div class="grid md:grid-cols-2 gap-10 items-center hero-content">
                     <div>
-                        <span class="badge-stock badge-in-stock mb-5 inline-block">⚡ Gisozi, Kigali • Same-Day Delivery</span>
-                        <h2 class="text-4xl md:text-6xl font-bold mb-5 leading-tight">Powering Rwanda's Homes & Businesses</h2>
-                        <p class="text-lg mb-8 max-w-lg">Quality LED Lighting, Solar Products & IT Accessories at wholesale and retail prices.</p>
-                        <div class="flex gap-4 flex-wrap">
+                        <span class="badge-stock badge-in-stock mb-6 inline-flex" style="background: rgba(0,184,148,0.15); color: #00E0B0;">⚡ Gisozi, Kigali • Same-Day Delivery</span>
+                        <h2 class="hero-headline mb-6">Powering Rwanda's <span class="gradient-text">Homes & Businesses</span></h2>
+                        <p class="text-lg mb-8 max-w-lg" style="color: rgba(255,255,255,0.7);">Quality LED Lighting, Solar Products & IT Accessories at wholesale and retail prices.</p>
+                        <div class="flex gap-4 flex-wrap mb-10">
                             <button onclick="navigate('shop')" class="btn-zon-primary text-base">Browse Catalog →</button>
                             <button onclick="navigate('contact')" class="btn-white-outline text-base">Contact Us</button>
                         </div>
-                        <div class="flex gap-8 mt-10 pt-8 border-t border-white/10 flex-wrap">
-                            <div><p class="text-2xl font-bold text-[var(--zon-primary)]" id="stat-products">—</p><p class="text-xs uppercase tracking-wider text-gray-400">Products</p></div>
-                            <div><p class="text-2xl font-bold text-[var(--zon-primary)]">100%</p><p class="text-xs uppercase tracking-wider text-gray-400">Genuine</p></div>
-                            <div><p class="text-2xl font-bold text-[var(--zon-primary)]">1-2</p><p class="text-xs uppercase tracking-wider text-gray-400">Yr Warranty</p></div>
-                            <div><p class="text-2xl font-bold text-[var(--zon-primary)]">24/7</p><p class="text-xs uppercase tracking-wider text-gray-400">Support</p></div>
+                        <div class="flex gap-8 md:gap-12 pt-8 border-t border-white/10 flex-wrap">
+                            <div><div class="hero-stat-num">6+</div><div class="hero-stat-label">Products</div></div>
+                            <div><div class="hero-stat-num">100%</div><div class="hero-stat-label">Genuine</div></div>
+                            <div><div class="hero-stat-num">1-2</div><div class="hero-stat-label">Yr Warranty</div></div>
+                            <div><div class="hero-stat-num">24/7</div><div class="hero-stat-label">Support</div></div>
                         </div>
                     </div>
-                    <div class="hidden md:flex justify-center items-center">
-                        <div class="relative w-full max-w-md">
-                            <div class="absolute inset-0 bg-gradient-to-tr from-[var(--zon-primary)] to-[var(--zon-accent)] rounded-3xl blur-3xl opacity-30 animate-pulse"></div>
-                            <img id="hero-product-img" src="https://placehold.co/500x500/1A1A1A/E85D04?text=ZON" class="relative rounded-3xl shadow-2xl w-full">
+                    <div class="hidden md:flex justify-center items-center relative">
+                        <div class="relative w-full">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-[#6C5CE7] via-[#A855F7] to-[#FF6B6B] rounded-3xl blur-3xl opacity-40 animate-pulse"></div>
+                            <div class="hero-carousel" id="hero-carousel"></div>
                         </div>
                     </div>
                 </div>
@@ -84,59 +136,32 @@
 
         <section class="container-zon mt-12">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white p-5 rounded-2xl shadow-[var(--shadow-soft)] flex items-center gap-4 hover-lift">
-                    <div class="w-12 h-12 rounded-full bg-green-50 text-green-600 flex items-center justify-center text-xl shrink-0">✓</div>
-                    <div><p class="font-bold text-sm">Genuine</p><p class="text-xs text-gray-500">Sourced directly</p></div>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-[var(--shadow-soft)] flex items-center gap-4 hover-lift">
-                    <div class="w-12 h-12 rounded-full bg-orange-50 text-[var(--zon-primary)] flex items-center justify-center text-xl shrink-0">🚚</div>
-                    <div><p class="font-bold text-sm">Fast Delivery</p><p class="text-xs text-gray-500">Same-day Kigali</p></div>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-[var(--shadow-soft)] flex items-center gap-4 hover-lift">
-                    <div class="w-12 h-12 rounded-full bg-blue-50 text-[var(--zon-accent)] flex items-center justify-center text-xl shrink-0">🛡️</div>
-                    <div><p class="font-bold text-sm">Warranty</p><p class="text-xs text-gray-500">1-2 Year</p></div>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-[var(--shadow-soft)] flex items-center gap-4 hover-lift">
-                    <div class="w-12 h-12 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-xl shrink-0">💰</div>
-                    <div><p class="font-bold text-sm">Wholesale</p><p class="text-xs text-gray-500">Bulk pricing</p></div>
-                </div>
+                <div class="trust-card"><div class="trust-icon trust-icon-emerald">✓</div><div><p class="font-bold text-sm">Genuine</p><p class="text-xs text-gray-500">Sourced directly</p></div></div>
+                <div class="trust-card"><div class="trust-icon trust-icon-coral">🚚</div><div><p class="font-bold text-sm">Fast Delivery</p><p class="text-xs text-gray-500">Same-day Kigali</p></div></div>
+                <div class="trust-card"><div class="trust-icon trust-icon-indigo">🛡️</div><div><p class="font-bold text-sm">Warranty</p><p class="text-xs text-gray-500">1-2 Year</p></div></div>
+                <div class="trust-card"><div class="trust-icon trust-icon-gold">💰</div><div><p class="font-bold text-sm">Wholesale</p><p class="text-xs text-gray-500">Bulk pricing</p></div></div>
             </div>
         </section>
 
-        <section class="container-zon mt-20">
-            <div class="text-center mb-10">
-                <span class="text-xs font-bold tracking-[0.2em] uppercase text-[var(--zon-primary)]">Explore</span>
-                <h3 class="text-3xl md:text-4xl font-bold mt-2">Shop by Category</h3>
+        <section class="container-zon mt-24">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold tracking-[0.25em] uppercase text-[var(--zon-primary)]">Explore</span>
+                <h3 class="text-4xl md:text-5xl font-bold mt-3">Shop by Category</h3>
+                <p class="text-gray-500 mt-3 max-w-lg mx-auto">Find exactly what you need from our curated collection of electronics and solar products.</p>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
-                <div onclick="setCategoryAndGo('led-lighting')" class="category-card">
-                    <div class="category-icon">💡</div>
-                    <h4 class="font-bold text-base">LED Lighting</h4>
-                    <p class="text-xs text-gray-500 mt-1">Bulbs, Panels, Tubes</p>
-                </div>
-                <div onclick="setCategoryAndGo('solar-products')" class="category-card">
-                    <div class="category-icon">☀️</div>
-                    <h4 class="font-bold text-base">Solar Products</h4>
-                    <p class="text-xs text-gray-500 mt-1">Flood Lights, Home Kits</p>
-                </div>
-                <div onclick="setCategoryAndGo('it-accessories')" class="category-card">
-                    <div class="category-icon">💻</div>
-                    <h4 class="font-bold text-base">IT Accessories</h4>
-                    <p class="text-xs text-gray-500 mt-1">Tablets, Keyboards</p>
-                </div>
-                <div onclick="setCategoryAndGo('audio-tws')" class="category-card">
-                    <div class="category-icon">🎧</div>
-                    <h4 class="font-bold text-base">Audio & TWS</h4>
-                    <p class="text-xs text-gray-500 mt-1">Earbuds, Speakers</p>
-                </div>
+                <div onclick="setCategoryAndGo('led-lighting')" class="category-card"><div class="category-icon">💡</div><h4 class="font-bold text-base">LED Lighting</h4><p class="text-xs text-gray-500 mt-1">Bulbs, Panels, Tubes</p></div>
+                <div onclick="setCategoryAndGo('solar-products')" class="category-card"><div class="category-icon">☀️</div><h4 class="font-bold text-base">Solar Products</h4><p class="text-xs text-gray-500 mt-1">Flood Lights, Home Kits</p></div>
+                <div onclick="setCategoryAndGo('it-accessories')" class="category-card"><div class="category-icon">💻</div><h4 class="font-bold text-base">IT Accessories</h4><p class="text-xs text-gray-500 mt-1">Tablets, Keyboards</p></div>
+                <div onclick="setCategoryAndGo('audio-tws')" class="category-card"><div class="category-icon">🎧</div><h4 class="font-bold text-base">Audio & TWS</h4><p class="text-xs text-gray-500 mt-1">Earbuds, Speakers</p></div>
             </div>
         </section>
 
-        <section class="container-zon py-20">
-            <div class="flex justify-between items-end mb-8 flex-wrap gap-4">
+        <section class="container-zon py-24">
+            <div class="flex justify-between items-end mb-10 flex-wrap gap-4">
                 <div>
-                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-[var(--zon-primary)]">Featured</span>
-                    <h3 class="text-3xl md:text-4xl font-bold mt-2">Our Products</h3>
+                    <span class="text-xs font-bold tracking-[0.25em] uppercase text-[var(--zon-primary)]">Featured</span>
+                    <h3 class="text-4xl md:text-5xl font-bold mt-3">Our Products</h3>
                 </div>
                 <button onclick="navigate('shop')" class="text-[var(--zon-primary)] font-semibold hover:underline">View All →</button>
             </div>
@@ -149,140 +174,94 @@
         </section>
 
         <section class="container-zon py-16">
-            <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-[var(--zon-primary)]">Why Us</span>
-                    <h3 class="text-3xl md:text-4xl font-bold mt-3 mb-6">Why Rwandans Trust Zon Corporation</h3>
-                    <p class="text-gray-600 leading-relaxed mb-8">We've built our reputation on genuine products, honest pricing, and reliable delivery.</p>
-                    <div class="space-y-4">
-                        <div class="flex items-start gap-4"><div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold shrink-0">✓</div><div><p class="font-bold">Genuine Products Only</p><p class="text-sm text-gray-500">Every item sourced from trusted manufacturers.</p></div></div>
-                        <div class="flex items-start gap-4"><div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold shrink-0">✓</div><div><p class="font-bold">Same-Day Delivery in Kigali</p><p class="text-sm text-gray-500">Order before 3pm, receive today.</p></div></div>
-                        <div class="flex items-start gap-4"><div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold shrink-0">✓</div><div><p class="font-bold">Wholesale & Retail</p><p class="text-sm text-gray-500">Special pricing for bulk buyers.</p></div></div>
-                        <div class="flex items-start gap-4"><div class="w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold shrink-0">✓</div><div><p class="font-bold">Real Warranty Support</p><p class="text-sm text-gray-500">1-2 year warranty on all products.</p></div></div>
+                    <span class="text-xs font-bold tracking-[0.25em] uppercase text-[var(--zon-primary)]">Why Us</span>
+                    <h3 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Why Rwandans Trust Zon Corporation</h3>
+                    <p class="text-gray-600 leading-relaxed mb-8 text-lg">We've built our reputation on genuine products, honest pricing, and reliable delivery.</p>
+                    <div class="space-y-5">
+                        <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-[var(--zon-success-soft)] text-[var(--zon-success)] flex items-center justify-center font-bold shrink-0">✓</div><div><p class="font-bold">Genuine Products Only</p><p class="text-sm text-gray-500">Every item sourced from trusted manufacturers.</p></div></div>
+                        <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-[var(--zon-success-soft)] text-[var(--zon-success)] flex items-center justify-center font-bold shrink-0">✓</div><div><p class="font-bold">Same-Day Delivery in Kigali</p><p class="text-sm text-gray-500">Order before 3pm, receive today.</p></div></div>
+                        <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-[var(--zon-success-soft)] text-[var(--zon-success)] flex items-center justify-center font-bold shrink-0">✓</div><div><p class="font-bold">Wholesale & Retail</p><p class="text-sm text-gray-500">Special pricing for bulk buyers.</p></div></div>
+                        <div class="flex items-start gap-4"><div class="w-10 h-10 rounded-xl bg-[var(--zon-success-soft)] text-[var(--zon-success)] flex items-center justify-center font-bold shrink-0">✓</div><div><p class="font-bold">Real Warranty Support</p><p class="text-sm text-gray-500">1-2 year warranty on all products.</p></div></div>
                     </div>
                 </div>
-                <div class="bg-aura-orange rounded-3xl p-10 text-white relative overflow-hidden noise-overlay">
-                    <div class="grid grid-cols-2 gap-8 text-center relative z-10">
-                        <div><p class="text-5xl font-bold mb-2">200+</p><p class="text-sm uppercase tracking-wider opacity-90">Customers</p></div>
-                        <div><p class="text-5xl font-bold mb-2" id="stat-products-2">50+</p><p class="text-sm uppercase tracking-wider opacity-90">Products</p></div>
-                        <div><p class="text-5xl font-bold mb-2">100%</p><p class="text-sm uppercase tracking-wider opacity-90">Genuine</p></div>
-                        <div><p class="text-5xl font-bold mb-2">24/7</p><p class="text-sm uppercase tracking-wider opacity-90">Support</p></div>
+                <div class="stats-banner">
+                    <div class="grid grid-cols-2 gap-8 text-center">
+                        <div><div class="stat-number">200+</div><div class="stat-label">Customers</div></div>
+                        <div><div class="stat-number">50+</div><div class="stat-label">Products</div></div>
+                        <div><div class="stat-number">100%</div><div class="stat-label">Genuine</div></div>
+                        <div><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="container-zon py-16">
-            <div class="text-center mb-10">
-                <span class="text-xs font-bold tracking-[0.2em] uppercase text-[var(--zon-primary)]">Testimonials</span>
-                <h3 class="text-3xl md:text-4xl font-bold mt-2">What Our Customers Say</h3>
+        <section class="container-zon py-20">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold tracking-[0.25em] uppercase text-[var(--zon-primary)]">Testimonials</span>
+                <h3 class="text-4xl md:text-5xl font-bold mt-3">What Our Customers Say</h3>
             </div>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-2xl p-8 shadow-[var(--shadow-soft)] hover-lift">
-                    <div class="text-[var(--zon-primary)] text-2xl mb-4">★★★★★</div>
-                    <p class="text-gray-600 leading-relaxed mb-6">"Ordered LED panels for my shop. Delivery was same-day and the quality is excellent."</p>
-                    <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[var(--zon-primary)] text-white flex items-center justify-center font-bold">J</div><div><p class="font-bold text-sm">Jean B.</p><p class="text-xs text-gray-500">Shop Owner, Kigali</p></div></div>
-                </div>
-                <div class="bg-white rounded-2xl p-8 shadow-[var(--shadow-soft)] hover-lift">
-                    <div class="text-[var(--zon-primary)] text-2xl mb-4">★★★★★</div>
-                    <p class="text-gray-600 leading-relaxed mb-6">"Bought solar lights for my home. Zon helped me choose the right ones. Highly recommend."</p>
-                    <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[var(--zon-primary)] text-white flex items-center justify-center font-bold">M</div><div><p class="font-bold text-sm">Marie U.</p><p class="text-xs text-gray-500">Home Owner, Gasabo</p></div></div>
-                </div>
-                <div class="bg-white rounded-2xl p-8 shadow-[var(--shadow-soft)] hover-lift">
-                    <div class="text-[var(--zon-primary)] text-2xl mb-4">★★★★★</div>
-                    <p class="text-gray-600 leading-relaxed mb-6">"As a retailer, Zon is my go-to supplier. Wholesale prices are fair and stock is always available."</p>
-                    <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[var(--zon-primary)] text-white flex items-center justify-center font-bold">E</div><div><p class="font-bold text-sm">Eric K.</p><p class="text-xs text-gray-500">Retailer, Nyarugenge</p></div></div>
-                </div>
+                <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-body mb-6">Ordered LED panels for my shop. Delivery was same-day and the quality is excellent.</p><div class="flex items-center gap-3"><div class="testimonial-avatar">J</div><div><p class="font-bold text-sm">Jean B.</p><p class="text-xs text-gray-500">Shop Owner, Kigali</p></div></div></div>
+                <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-body mb-6">Bought solar lights for my home. Zon helped me choose the right ones. Highly recommend.</p><div class="flex items-center gap-3"><div class="testimonial-avatar">M</div><div><p class="font-bold text-sm">Marie U.</p><p class="text-xs text-gray-500">Home Owner, Gasabo</p></div></div></div>
+                <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-body mb-6">As a retailer, Zon is my go-to supplier. Wholesale prices are fair and stock is always available.</p><div class="flex items-center gap-3"><div class="testimonial-avatar">E</div><div><p class="font-bold text-sm">Eric K.</p><p class="text-xs text-gray-500">Retailer, Nyarugenge</p></div></div></div>
             </div>
         </section>
 
         <section class="container-zon py-16">
-            <div class="bg-[var(--zon-secondary)] rounded-3xl p-10 md:p-14 relative overflow-hidden noise-overlay text-center">
-                <div class="relative z-10">
-                    <div class="text-5xl mb-4">📸</div>
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Follow Us on Instagram</h3>
-                    <p class="text-gray-300 mb-8 max-w-xl mx-auto">See our latest arrivals and special offers.</p>
-                    <a href="https://instagram.com/zoncorporationrwanda" target="_blank" class="inline-block bg-gradient-to-tr from-purple-600 via-pink-500 to-orange-400 text-white font-bold px-8 py-4 rounded-xl hover:opacity-90 transition shadow-xl">@zoncorporationrwanda</a>
-                </div>
+            <div class="instagram-card">
+                <div class="text-5xl mb-4">📸</div>
+                <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Follow Us on Instagram</h3>
+                <p class="text-gray-300 mb-8 max-w-xl mx-auto">See our latest arrivals, behind-the-scenes updates, and special offers.</p>
+                <a href="https://instagram.com/zoncorporationrwanda" target="_blank" class="instagram-btn">@zoncorporationrwanda</a>
             </div>
         </section>
 
-        <section class="container-zon mb-16">
-            <div class="bg-aura-orange rounded-3xl p-10 md:p-14 text-center relative overflow-hidden noise-overlay">
-                <div class="relative z-10 max-w-2xl mx-auto">
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Need Bulk Pricing?</h3>
-                    <p class="text-white/90 text-lg mb-8">We supply wholesalers and retailers across Rwanda.</p>
-                    <button onclick="navigate('contact')" class="inline-block bg-white text-[var(--zon-primary)] font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition shadow-xl">Request Wholesale Quote</button>
-                </div>
+        <section class="container-zon mb-20">
+            <div class="wholesale-cta">
+                <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Need Bulk Pricing?</h3>
+                <p class="text-white/90 text-lg mb-8 max-w-xl mx-auto">We supply wholesalers and retailers across Rwanda. Get in touch for special wholesale rates.</p>
+                <button onclick="navigate('contact')" class="inline-block bg-white text-[var(--zon-primary)] font-bold px-8 py-4 rounded-xl hover:bg-gray-100 transition shadow-xl">Request Wholesale Quote</button>
             </div>
         </section>
     </div>
 
-    <!-- =================================================================
-         PAGE: SHOP
-    ================================================================== -->
     <div id="page-shop" class="page flex-1">
         <header class="container-zon mt-8 mb-12">
-            <div class="bg-aura-dark rounded-3xl p-10 md:p-14 relative overflow-hidden noise-overlay text-center">
+            <div class="hero-shell p-10 md:p-14 text-center">
+                <div class="hero-orb hero-orb-1"></div>
+                <div class="hero-orb hero-orb-2"></div>
+                <div class="grid-pattern"></div>
                 <div class="relative z-10 max-w-2xl mx-auto">
-                    <span class="badge-stock badge-in-stock mb-4 inline-block">Full Catalog</span>
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Shop All Products</h2>
-                    <p class="text-lg">Browse our complete collection.</p>
+                    <span class="badge-stock badge-in-stock mb-4 inline-flex" style="background: rgba(0,184,148,0.15); color: #00E0B0;">Full Catalog</span>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color:white !important;">Shop All Products</h2>
+                    <p class="text-lg" style="color: rgba(255,255,255,0.7) !important;">Browse our complete collection.</p>
                 </div>
             </div>
         </header>
-
         <section class="container-zon pb-20">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 <aside class="lg:col-span-1">
-                    <div class="bg-white rounded-2xl p-6 shadow-[var(--shadow-soft)] sticky top-24">
-                        <div class="mb-8">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Search</label>
-                            <input type="text" id="shop-search" placeholder="Find a product..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[var(--zon-primary)]">
-                        </div>
-                        <div class="mb-8">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Categories</label>
-                            <div id="shop-category-filters" class="space-y-2"></div>
-                        </div>
-                        <div class="mb-8">
-                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Availability</label>
-                            <label class="flex items-center gap-3 cursor-pointer">
-                                <input type="checkbox" id="shop-stock-only" class="checkbox checkbox-sm" style="accent-color:var(--zon-primary);">
-                                <span class="text-sm">In Stock Only</span>
-                            </label>
-                        </div>
+                    <div class="bg-white rounded-2xl p-6 shadow-[var(--shadow-sm)] border border-[var(--zon-border)] sticky top-24">
+                        <div class="mb-8"><label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Search</label><input type="text" id="shop-search" placeholder="Find a product..." class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[var(--zon-primary)]"></div>
+                        <div class="mb-8"><label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Categories</label><div id="shop-category-filters" class="space-y-2"></div></div>
+                        <div class="mb-8"><label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Availability</label><label class="flex items-center gap-3 cursor-pointer"><input type="checkbox" id="shop-stock-only" class="checkbox checkbox-sm" style="accent-color:var(--zon-primary);"><span class="text-sm">In Stock Only</span></label></div>
                         <button id="shop-reset" class="btn-zon-outline w-full py-2 text-sm">Reset Filters</button>
                     </div>
                 </aside>
-
                 <main class="lg:col-span-3">
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                         <p id="shop-result-count" class="text-sm text-gray-600">Loading...</p>
-                        <div class="flex items-center gap-2">
-                            <label class="text-sm text-gray-600">Sort by:</label>
-                            <select id="shop-sort" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--zon-primary)]">
-                                <option value="newest">Newest</option>
-                                <option value="price-asc">Price: Low to High</option>
-                                <option value="price-desc">Price: High to Low</option>
-                                <option value="name">Name (A-Z)</option>
-                            </select>
-                        </div>
+                        <div class="flex items-center gap-2"><label class="text-sm text-gray-600">Sort by:</label><select id="shop-sort" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-[var(--zon-primary)]"><option value="newest">Newest</option><option value="price-asc">Price: Low to High</option><option value="price-desc">Price: High to Low</option><option value="name">Name (A-Z)</option></select></div>
                     </div>
-
                     <div id="shop-product-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"></div>
-                    <div id="shop-no-results" class="hidden text-center py-20">
-                        <div class="text-6xl mb-4">🔍</div>
-                        <h3 class="text-xl font-bold mb-2">No products found</h3>
-                        <p class="text-gray-500">Try adjusting your filters.</p>
-                    </div>
+                    <div id="shop-no-results" class="hidden text-center py-20"><div class="text-6xl mb-4">🔍</div><h3 class="text-xl font-bold mb-2">No products found</h3><p class="text-gray-500">Try adjusting your filters.</p></div>
                 </main>
             </div>
         </section>
     </div>
 
-    <!-- =================================================================
-         PAGE: PRODUCT DETAIL
-    ================================================================== -->
     <div id="page-product" class="page flex-1">
         <div class="container-zon py-10">
             <button onclick="navigate('shop')" class="text-sm text-gray-500 hover:text-[var(--zon-primary)] mb-6">← Back to Shop</button>
@@ -290,71 +269,24 @@
         </div>
     </div>
 
-    <!-- =================================================================
-         PAGE: CART
-    ================================================================== -->
     <div id="page-cart" class="page flex-1">
         <section class="container-zon py-12">
-            <div class="mb-8">
-                <span class="text-xs font-bold tracking-[0.2em] uppercase text-[var(--zon-primary)]">Shopping Cart</span>
-                <h1 class="text-4xl font-bold mt-2">Your Cart</h1>
-            </div>
-
-            <div id="cart-empty" class="hidden text-center py-20 bg-white rounded-3xl shadow-[var(--shadow-soft)]">
-                <div class="text-6xl mb-4">🛒</div>
-                <h2 class="text-2xl font-bold mb-2">Your cart is empty</h2>
-                <p class="text-gray-500 mb-6">Add products before checking out.</p>
-                <button onclick="navigate('shop')" class="btn-zon-primary">Start Shopping</button>
-            </div>
-
+            <div class="mb-8"><span class="text-xs font-bold tracking-[0.25em] uppercase text-[var(--zon-primary)]">Shopping Cart</span><h1 class="text-5xl font-bold mt-3">Your Cart</h1></div>
+            <div id="cart-empty" class="hidden text-center py-20 bg-white rounded-3xl shadow-[var(--shadow-sm)] border border-[var(--zon-border)]"><div class="text-6xl mb-4">🛒</div><h2 class="text-2xl font-bold mb-2">Your cart is empty</h2><p class="text-gray-500 mb-6">Add products before checking out.</p><button onclick="navigate('shop')" class="btn-zon-primary">Start Shopping</button></div>
             <div id="cart-content" class="hidden grid lg:grid-cols-3 gap-8">
-                <div class="lg:col-span-2">
-                    <div class="bg-white rounded-3xl shadow-[var(--shadow-soft)] overflow-hidden">
-                        <div class="p-6 border-b border-gray-100 flex justify-between items-center">
-                            <h2 class="font-bold text-lg">Items</h2>
-                            <button onclick="clearCart()" class="text-sm text-red-500 hover:text-red-700 font-semibold">Clear All</button>
-                        </div>
-                        <div id="cart-items-list"></div>
-                    </div>
-                </div>
-                <div class="lg:col-span-1">
-                    <div class="bg-white rounded-3xl shadow-[var(--shadow-soft)] p-6 sticky top-24">
-                        <h2 class="font-bold text-lg mb-6">Order Summary</h2>
-                        <div class="space-y-3 pb-6 border-b border-gray-100">
-                            <div class="flex justify-between text-sm"><span class="text-gray-500">Subtotal</span><span id="cart-subtotal" class="font-semibold">0 RWF</span></div>
-                            <div class="flex justify-between text-sm"><span class="text-gray-500">Delivery</span><span class="font-semibold">At checkout</span></div>
-                        </div>
-                        <div class="flex justify-between items-center py-6">
-                            <span class="font-bold text-lg">Total</span>
-                            <span id="cart-total" class="font-bold text-2xl text-[var(--zon-primary)]">0 RWF</span>
-                        </div>
-                        <button onclick="navigate('checkout')" class="btn-zon-primary w-full py-4 text-base">Proceed to Checkout →</button>
-                        <button onclick="navigate('shop')" class="block w-full text-center text-sm text-gray-500 hover:text-[var(--zon-primary)] mt-4">Continue Shopping</button>
-                    </div>
-                </div>
+                <div class="lg:col-span-2"><div class="bg-white rounded-3xl shadow-[var(--shadow-sm)] border border-[var(--zon-border)] overflow-hidden"><div class="p-6 border-b border-gray-100 flex justify-between items-center"><h2 class="font-bold text-lg">Items</h2><button onclick="clearCart()" class="text-sm text-red-500 hover:text-red-700 font-semibold">Clear All</button></div><div id="cart-items-list"></div></div></div>
+                <div class="lg:col-span-1"><div class="bg-white rounded-3xl shadow-[var(--shadow-sm)] border border-[var(--zon-border)] p-6 sticky top-24"><h2 class="font-bold text-lg mb-6">Order Summary</h2><div class="space-y-3 pb-6 border-b border-gray-100"><div class="flex justify-between text-sm"><span class="text-gray-500">Subtotal</span><span id="cart-subtotal" class="font-semibold">0 RWF</span></div><div class="flex justify-between text-sm"><span class="text-gray-500">Delivery</span><span class="font-semibold">At checkout</span></div></div><div class="flex justify-between items-center py-6"><span class="font-bold text-lg">Total</span><span id="cart-total" class="font-bold text-2xl price-gradient">0 RWF</span></div><button onclick="navigate('checkout')" class="btn-zon-primary w-full py-4 text-base">Proceed to Checkout →</button><button onclick="navigate('shop')" class="block w-full text-center text-sm text-gray-500 hover:text-[var(--zon-primary)] mt-4">Continue Shopping</button></div></div>
             </div>
         </section>
     </div>
 
-    <!-- =================================================================
-         PAGE: CHECKOUT
-    ================================================================== -->
     <div id="page-checkout" class="page flex-1">
         <section class="container-zon py-12">
-            <div class="mb-8">
-                <span class="text-xs font-bold tracking-[0.2em] uppercase text-[var(--zon-primary)]">Almost There</span>
-                <h1 class="text-4xl font-bold mt-2">Checkout</h1>
-            </div>
-
-            <div id="checkout-empty" class="hidden text-center py-20 bg-white rounded-3xl shadow-[var(--shadow-soft)]">
-                <div class="text-6xl mb-4">🛒</div>
-                <h2 class="text-2xl font-bold mb-2">Your cart is empty</h2>
-                <button onclick="navigate('shop')" class="btn-zon-primary mt-4">Browse Products</button>
-            </div>
-
+            <div class="mb-8"><span class="text-xs font-bold tracking-[0.25em] uppercase text-[var(--zon-primary)]">Almost There</span><h1 class="text-5xl font-bold mt-3">Checkout</h1></div>
+            <div id="checkout-empty" class="hidden text-center py-20 bg-white rounded-3xl shadow-[var(--shadow-sm)] border border-[var(--zon-border)]"><div class="text-6xl mb-4">🛒</div><h2 class="text-2xl font-bold mb-2">Your cart is empty</h2><button onclick="navigate('shop')" class="btn-zon-primary mt-4">Browse Products</button></div>
             <div id="checkout-content" class="hidden grid lg:grid-cols-5 gap-8">
                 <div class="lg:col-span-3">
-                    <form id="checkout-form" class="bg-white rounded-3xl p-6 md:p-8 shadow-[var(--shadow-soft)] space-y-6">
+                    <form id="checkout-form" class="bg-white rounded-3xl p-6 md:p-8 shadow-[var(--shadow-sm)] border border-[var(--zon-border)] space-y-6">
                         <h2 class="font-bold text-xl">Delivery Information</h2>
                         <div class="grid md:grid-cols-2 gap-5">
                             <div class="md:col-span-2"><label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Full Name *</label><input type="text" id="co-name" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[var(--zon-primary)]"></div>
@@ -365,8 +297,8 @@
                         <div>
                             <label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-3">Delivery Zone *</label>
                             <div class="grid grid-cols-2 gap-3">
-                                <label class="cursor-pointer"><input type="radio" name="zone" value="kigali" checked class="peer sr-only" onchange="currentZone='kigali'; updateCheckoutSummary();"><div class="p-4 border-2 border-gray-200 rounded-xl peer-checked:border-[var(--zon-primary)] peer-checked:bg-orange-50 transition"><p class="font-bold text-sm">Kigali</p><p class="text-xs text-gray-500">2,000 RWF • Same day</p></div></label>
-                                <label class="cursor-pointer"><input type="radio" name="zone" value="outside" class="peer sr-only" onchange="currentZone='outside'; updateCheckoutSummary();"><div class="p-4 border-2 border-gray-200 rounded-xl peer-checked:border-[var(--zon-primary)] peer-checked:bg-orange-50 transition"><p class="font-bold text-sm">Outside Kigali</p><p class="text-xs text-gray-500">5,000 RWF • 1-2 days</p></div></label>
+                                <label class="cursor-pointer"><input type="radio" name="zone" value="kigali" checked class="peer sr-only" onchange="currentZone='kigali'; updateCheckoutSummary();"><div class="p-4 border-2 border-gray-200 rounded-xl peer-checked:border-[var(--zon-primary)] peer-checked:bg-[var(--zon-primary-soft)] transition"><p class="font-bold text-sm">Kigali</p><p class="text-xs text-gray-500">2,000 RWF • Same day</p></div></label>
+                                <label class="cursor-pointer"><input type="radio" name="zone" value="outside" class="peer sr-only" onchange="currentZone='outside'; updateCheckoutSummary();"><div class="p-4 border-2 border-gray-200 rounded-xl peer-checked:border-[var(--zon-primary)] peer-checked:bg-[var(--zon-primary-soft)] transition"><p class="font-bold text-sm">Outside Kigali</p><p class="text-xs text-gray-500">5,000 RWF • 1-2 days</p></div></label>
                             </div>
                         </div>
                         <div>
@@ -380,28 +312,24 @@
                     </form>
                 </div>
                 <div class="lg:col-span-2">
-                    <div class="bg-white rounded-3xl p-6 md:p-8 shadow-[var(--shadow-soft)] sticky top-24">
+                    <div class="bg-white rounded-3xl p-6 md:p-8 shadow-[var(--shadow-sm)] border border-[var(--zon-border)] sticky top-24">
                         <h2 class="font-bold text-xl mb-6">Order Summary</h2>
                         <div id="checkout-items" class="space-y-4 pb-6 border-b border-gray-100 max-h-80 overflow-y-auto"></div>
                         <div class="space-y-3 py-6 border-b border-gray-100">
                             <div class="flex justify-between text-sm"><span class="text-gray-500">Subtotal</span><span id="checkout-subtotal" class="font-semibold">0 RWF</span></div>
                             <div class="flex justify-between text-sm"><span class="text-gray-500">Delivery</span><span id="checkout-delivery" class="font-semibold">2,000 RWF</span></div>
                         </div>
-                        <div class="flex justify-between items-center py-6">
-                            <span class="font-bold text-lg">Total</span>
-                            <span id="checkout-total" class="font-bold text-2xl text-[var(--zon-primary)]">0 RWF</span>
-                        </div>
+                        <div class="flex justify-between items-center py-6"><span class="font-bold text-lg">Total</span><span id="checkout-total" class="font-bold text-2xl price-gradient">0 RWF</span></div>
                         <button id="place-order-btn" onclick="placeOrder()" class="btn-zon-primary w-full py-4 text-base">Place Order →</button>
                     </div>
                 </div>
             </div>
-
-            <div id="order-success" class="hidden bg-white rounded-3xl p-10 md:p-16 shadow-[var(--shadow-soft)] text-center max-w-2xl mx-auto">
-                <div class="w-20 h-20 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-4xl mx-auto mb-6">✓</div>
+            <div id="order-success" class="hidden bg-white rounded-3xl p-10 md:p-16 shadow-[var(--shadow-md)] text-center max-w-2xl mx-auto border border-[var(--zon-border)]">
+                <div class="w-20 h-20 rounded-full bg-[var(--zon-success-soft)] text-[var(--zon-success)] flex items-center justify-center text-4xl mx-auto mb-6">✓</div>
                 <h2 class="text-3xl font-bold mb-3">Order Placed!</h2>
                 <p class="text-gray-500 mb-2">Thank you for shopping with Zon Corporation.</p>
                 <p class="mb-6">Your order number is:</p>
-                <p id="success-order-number" class="text-2xl font-bold text-[var(--zon-primary)] tracking-wider mb-8"></p>
+                <p id="success-order-number" class="text-2xl font-bold price-gradient tracking-wider mb-8"></p>
                 <p class="text-gray-500 text-sm mb-8">We'll contact you to confirm. If you chose Mobile Money, dial *182# to complete payment.</p>
                 <div class="flex flex-col sm:flex-row gap-3 justify-center">
                     <button onclick="navigate('shop')" class="btn-zon-primary">Continue Shopping</button>
@@ -411,103 +339,71 @@
         </section>
     </div>
 
-    <!-- =================================================================
-         PAGE: ABOUT
-    ================================================================== -->
     <div id="page-about" class="page flex-1">
         <header class="container-zon mt-8">
-            <div class="bg-aura-dark rounded-3xl p-10 md:p-16 relative overflow-hidden noise-overlay text-center">
+            <div class="hero-shell p-10 md:p-16 text-center">
+                <div class="hero-orb hero-orb-1"></div>
+                <div class="hero-orb hero-orb-2"></div>
+                <div class="grid-pattern"></div>
                 <div class="relative z-10 max-w-3xl mx-auto">
-                    <span class="badge-stock badge-in-stock mb-4 inline-block">Our Story</span>
-                    <h1 class="text-4xl md:text-6xl font-bold mb-6">About Zon Corporation</h1>
-                    <p class="text-lg md:text-xl">A trusted name in technology and electronics trading across Rwanda.</p>
+                    <span class="badge-stock badge-in-stock mb-4 inline-flex" style="background: rgba(0,184,148,0.15); color: #00E0B0;">Our Story</span>
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6" style="color:white !important;">About Zon Corporation</h1>
+                    <p class="text-lg md:text-xl" style="color: rgba(255,255,255,0.75) !important;">A trusted name in technology and electronics trading across Rwanda.</p>
                 </div>
             </div>
         </header>
-
         <section class="container-zon py-20">
             <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
                 <div>
-                    <span class="text-xs font-bold tracking-[0.2em] uppercase text-[var(--zon-primary)]">Who We Are</span>
-                    <h2 class="text-3xl md:text-4xl font-bold mt-3 mb-6">Your Partner in Power & Technology</h2>
-                    <p class="text-gray-600 leading-relaxed mb-4">Zon Corporation Rwanda Limited is a technology and electronics trading company based in Gisozi, Kigali. We specialize in supplying high-quality LED lighting, solar home systems, IT accessories, and audio products to homes, businesses, wholesalers, and retailers across Rwanda.</p>
-                    <p class="text-gray-600 leading-relaxed">Our mission is simple: make reliable, energy-efficient technology accessible to every Rwandan household and business — at prices that make sense.</p>
+                    <span class="text-xs font-bold tracking-[0.25em] uppercase text-[var(--zon-primary)]">Who We Are</span>
+                    <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6">Your Partner in Power & Technology</h2>
+                    <p class="text-gray-600 leading-relaxed mb-4 text-lg">Zon Corporation Rwanda Limited is a technology and electronics trading company based in Gisozi, Kigali. We specialize in supplying high-quality LED lighting, solar home systems, IT accessories, and audio products to homes, businesses, wholesalers, and retailers across Rwanda.</p>
+                    <p class="text-gray-600 leading-relaxed text-lg">Our mission is simple: make reliable, energy-efficient technology accessible to every Rwandan household and business.</p>
                 </div>
-                <div class="bg-aura-orange rounded-3xl p-10 text-white relative overflow-hidden">
+                <div class="stats-banner">
                     <div class="grid grid-cols-2 gap-8 text-center">
-                        <div><p class="text-5xl font-bold mb-2">200+</p><p class="text-sm uppercase tracking-wider opacity-90">Happy Customers</p></div>
-                        <div><p class="text-5xl font-bold mb-2">50+</p><p class="text-sm uppercase tracking-wider opacity-90">Products</p></div>
-                        <div><p class="text-5xl font-bold mb-2">100%</p><p class="text-sm uppercase tracking-wider opacity-90">Genuine</p></div>
-                        <div><p class="text-5xl font-bold mb-2">24/7</p><p class="text-sm uppercase tracking-wider opacity-90">Support</p></div>
+                        <div><div class="stat-number">200+</div><div class="stat-label">Customers</div></div>
+                        <div><div class="stat-number">50+</div><div class="stat-label">Products</div></div>
+                        <div><div class="stat-number">100%</div><div class="stat-label">Genuine</div></div>
+                        <div><div class="stat-number">24/7</div><div class="stat-label">Support</div></div>
                     </div>
                 </div>
             </div>
-
             <div class="grid md:grid-cols-3 gap-6 mb-20">
-                <div class="bg-white rounded-2xl p-8 shadow-[var(--shadow-soft)]">
-                    <div class="w-14 h-14 rounded-full bg-orange-100 text-[var(--zon-primary)] flex items-center justify-center text-2xl mb-5">🎯</div>
-                    <h3 class="font-bold text-xl mb-3">Our Mission</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">To power Rwanda's homes and businesses with reliable, affordable technology.</p>
-                </div>
-                <div class="bg-white rounded-2xl p-8 shadow-[var(--shadow-soft)]">
-                    <div class="w-14 h-14 rounded-full bg-blue-100 text-[var(--zon-accent)] flex items-center justify-center text-2xl mb-5">👁️</div>
-                    <h3 class="font-bold text-xl mb-3">Our Vision</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">To become Rwanda's most trusted supplier of LED lighting, solar products, and electronics.</p>
-                </div>
-                <div class="bg-white rounded-2xl p-8 shadow-[var(--shadow-soft)]">
-                    <div class="w-14 h-14 rounded-full bg-green-100 text-green-600 flex items-center justify-center text-2xl mb-5">💎</div>
-                    <h3 class="font-bold text-xl mb-3">Our Values</h3>
-                    <p class="text-gray-600 text-sm leading-relaxed">Quality, integrity, and customer satisfaction at every step of the way.</p>
-                </div>
+                <div class="trust-card" style="flex-direction: column; align-items: flex-start; padding: 2rem;"><div class="trust-icon trust-icon-indigo mb-4" style="width:56px;height:56px;">🎯</div><h3 class="font-bold text-xl mb-3">Our Mission</h3><p class="text-gray-600 text-sm leading-relaxed">To power Rwanda's homes and businesses with reliable, affordable technology.</p></div>
+                <div class="trust-card" style="flex-direction: column; align-items: flex-start; padding: 2rem;"><div class="trust-icon trust-icon-coral mb-4" style="width:56px;height:56px;">👁️</div><h3 class="font-bold text-xl mb-3">Our Vision</h3><p class="text-gray-600 text-sm leading-relaxed">To become Rwanda's most trusted supplier of electronics and solar.</p></div>
+                <div class="trust-card" style="flex-direction: column; align-items: flex-start; padding: 2rem;"><div class="trust-icon trust-icon-emerald mb-4" style="width:56px;height:56px;">💎</div><h3 class="font-bold text-xl mb-3">Our Values</h3><p class="text-gray-600 text-sm leading-relaxed">Quality, integrity, and customer satisfaction at every step.</p></div>
             </div>
         </section>
     </div>
 
-    <!-- =================================================================
-         PAGE: CONTACT
-    ================================================================== -->
     <div id="page-contact" class="page flex-1">
         <header class="container-zon mt-8">
-            <div class="bg-aura-dark rounded-3xl p-10 md:p-16 relative overflow-hidden noise-overlay text-center">
+            <div class="hero-shell p-10 md:p-16 text-center">
+                <div class="hero-orb hero-orb-1"></div>
+                <div class="hero-orb hero-orb-2"></div>
+                <div class="grid-pattern"></div>
                 <div class="relative z-10 max-w-3xl mx-auto">
-                    <span class="badge-stock badge-in-stock mb-4 inline-block">We're Here to Help</span>
-                    <h1 class="text-4xl md:text-6xl font-bold mb-6">Get in Touch</h1>
-                    <p class="text-lg md:text-xl">Questions about products or delivery? Reach out anytime.</p>
+                    <span class="badge-stock badge-in-stock mb-4 inline-flex" style="background: rgba(0,184,148,0.15); color: #00E0B0;">We're Here to Help</span>
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6" style="color:white !important;">Get in Touch</h1>
+                    <p class="text-lg md:text-xl" style="color: rgba(255,255,255,0.75) !important;">Questions about products or delivery? Reach out anytime.</p>
                 </div>
             </div>
         </header>
-
         <section class="container-zon py-20">
             <div class="grid lg:grid-cols-2 gap-10">
                 <div class="space-y-6">
-                    <div class="bg-white rounded-2xl p-6 shadow-[var(--shadow-soft)] flex items-start gap-4">
-                        <div class="w-12 h-12 rounded-full bg-orange-100 text-[var(--zon-primary)] flex items-center justify-center text-xl shrink-0">📍</div>
-                        <div><h3 class="font-bold mb-1">Visit Us</h3><p class="text-gray-600 text-sm">Gisozi, Kigali, Rwanda</p></div>
-                    </div>
-                    <div class="bg-white rounded-2xl p-6 shadow-[var(--shadow-soft)] flex items-start gap-4">
-                        <div class="w-12 h-12 rounded-full bg-blue-100 text-[var(--zon-accent)] flex items-center justify-center text-xl shrink-0">📞</div>
-                        <div><h3 class="font-bold mb-1">Call or WhatsApp</h3><p class="text-gray-600 text-sm">+250 790 696 865</p><a href="https://wa.me/250790696865" target="_blank" class="text-[var(--zon-primary)] text-sm font-semibold mt-2 inline-block hover:underline">Chat on WhatsApp →</a></div>
-                    </div>
-                    <div class="bg-white rounded-2xl p-6 shadow-[var(--shadow-soft)] flex items-start gap-4">
-                        <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xl shrink-0">✉️</div>
-                        <div><h3 class="font-bold mb-1">Email Us</h3><p class="text-gray-600 text-sm">contact@zoncorp.rw</p></div>
-                    </div>
-                    <div class="bg-white rounded-2xl p-6 shadow-[var(--shadow-soft)] flex items-start gap-4">
-                        <div class="w-12 h-12 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center text-xl shrink-0">📸</div>
-                        <div><h3 class="font-bold mb-1">Follow Us</h3><p class="text-gray-600 text-sm">@zoncorporationrwanda</p></div>
-                    </div>
-                    <div class="bg-white rounded-2xl overflow-hidden shadow-[var(--shadow-soft)]">
-                        <iframe src="https://www.google.com/maps?q=Gisozi,Kigali,Rwanda&output=embed" width="100%" height="280" style="border:0;" loading="lazy"></iframe>
-                    </div>
+                    <div class="trust-card"><div class="trust-icon trust-icon-coral"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><h3 class="font-bold mb-1">Visit Us</h3><p class="text-gray-600 text-sm">Gisozi, Kigali, Rwanda</p></div></div>
+                    <div class="trust-card"><div class="trust-icon trust-icon-indigo">📞</div><div><h3 class="font-bold mb-1">Call or WhatsApp</h3><p class="text-gray-600 text-sm">+250 790 696 865</p></div></div>
+                    <div class="trust-card"><div class="trust-icon trust-icon-gold">✉️</div><div><h3 class="font-bold mb-1">Email Us</h3><p class="text-gray-600 text-sm">contact@zoncorp.rw</p></div></div>
+                    <div class="bg-white rounded-2xl overflow-hidden shadow-[var(--shadow-sm)] border border-[var(--zon-border)]"><iframe src="https://www.google.com/maps?q=Gisozi,Kigali,Rwanda&output=embed" width="100%" height="280" style="border:0;" loading="lazy"></iframe></div>
                 </div>
-
-                <div class="bg-white rounded-3xl p-8 md:p-10 shadow-[var(--shadow-soft)]">
+                <div class="bg-white rounded-3xl p-8 md:p-10 shadow-[var(--shadow-sm)] border border-[var(--zon-border)]">
                     <h2 class="text-2xl font-bold mb-2">Send Us a Message</h2>
                     <p class="text-gray-500 text-sm mb-8">We'll get back to you as soon as possible.</p>
                     <form id="contact-form" class="space-y-5">
                         <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Your Name *</label><input type="text" id="cf-name" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[var(--zon-primary)]"></div>
                         <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Phone *</label><input type="tel" id="cf-phone" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[var(--zon-primary)]"></div>
-                        <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Email</label><input type="email" id="cf-email" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[var(--zon-primary)]"></div>
                         <div><label class="block text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Message *</label><textarea id="cf-message" rows="5" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-[var(--zon-primary)] resize-none"></textarea></div>
                         <button type="submit" class="btn-zon-primary w-full py-4">Send Message</button>
                     </form>
@@ -516,139 +412,378 @@
         </section>
     </div>
 
-    <!-- =================================================================
-         FOOTER (shared)
-    ================================================================== -->
-    <footer class="bg-[var(--zon-secondary)] text-white pt-16 pb-8 mt-12">
+    <footer class="zon-footer">
         <div class="container-zon grid grid-cols-1 md:grid-cols-4 gap-10">
             <div class="md:col-span-1">
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-10 h-10 rounded-full bg-[var(--zon-primary)] flex items-center justify-center text-white font-bold text-lg">Z</div>
-                    <div><h4 class="font-bold leading-none">ZON CORPORATION</h4><p class="text-[10px] text-[var(--zon-primary)] font-bold tracking-widest uppercase">Rwanda Ltd</p></div>
+                <div class="flex items-center gap-3 mb-5">
+                    <img src="/logo.png" alt="ZON Corporation" class="brand-logo w-12 h-12 object-contain">
+                    <div><h4 class="font-bold leading-none" style="font-family: var(--font-display);">ZON CORPORATION</h4><p class="text-[10px] font-bold tracking-widest uppercase mt-1" style="color:#A855F7;">Rwanda Ltd</p></div>
                 </div>
-                <p class="text-gray-400 text-sm leading-relaxed">Technology and electronics trading company located in Gisozi, Kigali, Rwanda.</p>
+                <p class="text-sm leading-relaxed" style="color: rgba(255,255,255,0.55);">Technology and electronics trading company located in Gisozi, Kigali, Rwanda.</p>
             </div>
             <div>
-                <h4 class="font-bold mb-4 text-sm uppercase tracking-wider">Quick Links</h4>
-                <ul class="text-gray-400 text-sm space-y-3">
-                    <li><span onclick="navigate('shop')" class="hover:text-[var(--zon-primary)] transition cursor-pointer">Shop</span></li>
-                    <li><span onclick="navigate('about')" class="hover:text-[var(--zon-primary)] transition cursor-pointer">About Us</span></li>
-                    <li><span onclick="navigate('contact')" class="hover:text-[var(--zon-primary)] transition cursor-pointer">Contact</span></li>
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="space-y-1">
+                    <li><span onclick="navigate('shop')" class="footer-link">Shop</span></li>
+                    <li><span onclick="navigate('about')" class="footer-link">About Us</span></li>
+                    <li><span onclick="navigate('contact')" class="footer-link">Contact</span></li>
                 </ul>
             </div>
             <div>
-                <h4 class="font-bold mb-4 text-sm uppercase tracking-wider">Categories</h4>
-                <ul class="text-gray-400 text-sm space-y-3">
-                    <li><span onclick="setCategoryAndGo('led-lighting')" class="hover:text-[var(--zon-primary)] transition cursor-pointer">LED Lighting</span></li>
-                    <li><span onclick="setCategoryAndGo('solar-products')" class="hover:text-[var(--zon-primary)] transition cursor-pointer">Solar Products</span></li>
-                    <li><span onclick="setCategoryAndGo('it-accessories')" class="hover:text-[var(--zon-primary)] transition cursor-pointer">IT Accessories</span></li>
-                    <li><span onclick="setCategoryAndGo('audio-tws')" class="hover:text-[var(--zon-primary)] transition cursor-pointer">Audio & TWS</span></li>
+                <h4 class="footer-heading">Legal</h4>
+                <ul class="space-y-1">
+                    <li><a href="legal.html?doc=terms" class="footer-link">Terms of Service</a></li>
+                    <li><a href="legal.html?doc=privacy" class="footer-link">Privacy Policy</a></li>
+                    <li><a href="legal.html?doc=refund" class="footer-link">Refund Policy</a></li>
+                    <li><a href="legal.html?doc=shipping" class="footer-link">Shipping Policy</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="font-bold mb-4 text-sm uppercase tracking-wider">Contact</h4>
-                <ul class="text-gray-400 text-sm space-y-3">
+                <h4 class="footer-heading">Contact</h4>
+                <ul class="space-y-2 text-sm" style="color: rgba(255,255,255,0.55);">
                     <li>📍 Gisozi, Kigali, Rwanda</li>
                     <li>📞 +250 790 696 865</li>
                     <li>✉️ contact@zoncorp.rw</li>
+                    <li><a href="https://instagram.com/zoncorporationrwanda" target="_blank" class="footer-link" style="color: rgba(255,255,255,0.55);">📸 @zoncorporationrwanda</a></li>
                 </ul>
             </div>
         </div>
-        <div class="container-zon mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-gray-500 text-sm">&copy; 2026 Zon Corporation Rwanda Ltd. All rights reserved.</p>
-            <p class="text-gray-500 text-sm">Made with ❤️ in Kigali</p>
+        <div class="container-zon mt-14 pt-8 flex flex-col md:flex-row justify-between items-center gap-4" style="border-top: 1px solid rgba(255,255,255,0.08);">
+            <p class="text-sm" style="color: rgba(255,255,255,0.4);">&copy; 2026 Zon Corporation Rwanda Ltd. All rights reserved.</p>
+            <p class="text-sm" style="color: rgba(255,255,255,0.4);">Made with ❤️ in Kigali</p>
         </div>
     </footer>
 
-    <!-- ===== SCRIPTS ===== -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/app.js"></script>
 
     <script>
-        // ===== Global handlers used by HTML onclick attributes =====
-        function setCategoryAndGo(slug) {
-            activeCategories = [slug];
-            navigate('shop');
-        }
+    // ============================================================
+    // TRANSLATION SYSTEM (inline)
+    // ============================================================
+    const TRANSLATIONS = {
+        'Home': 'Ahabanza',
+        'Shop': 'Iduka',
+        'About': 'Ibitwerekeyeho',
+        'Contact': 'Twandikire',
+        'Same-Day Delivery in Kigali': 'Gutanga uwo munsi i Kigali',
+        'Wholesale Pricing Available': 'Igiciro cy\'ikibazo kirahari',
+        '1-2 Year Warranty on All Products': 'Icyemezo cy\'imyaka 1-2 ku bicuruzwa byose',
+        'Genuine Electronics Guaranteed': 'Ibikoresho by\'ukuri birateganyijwe',
+        'Gisozi, Kigali, Rwanda': 'Gisozi, Kigali, u Rwanda',
+        'Follow @zoncorporationrwanda': 'Kurikira @zoncorporationrwanda',
+        'Powering Rwanda\'s': 'Guha Ingufu u Rwanda',
+        'Homes & Businesses': 'Ingo n\'Ubucuruzi',
+        'Quality LED Lighting, Solar Products & IT Accessories at wholesale and retail prices.': 'Amatara ya LED y\'ubuziranenge, Ibicuruzwa by\'Imirasire y\'Izuba n\'Ibikoresho bya IT ku giciro cy\'ikibazo n\'icy\'ubucuruzi.',
+        'Browse Catalog →': 'Reba Ibicuruzwa →',
+        'Contact Us': 'Twandikire',
+        'Products': 'Ibicuruzwa',
+        'Genuine': 'Nyakuri',
+        'Yr Warranty': 'Imyaka y\'Icyemezo',
+        'Support': 'Inkunga',
+        'Sourced directly': 'Biva ku kigo',
+        'Fast Delivery': 'Delivery zihuse',
+        'Same-day Kigali': 'Uwo munsi i Kigali',
+        'Warranty': 'Icyemezo',
+        '1-2 Year': 'Umwaka 1-2',
+        'Wholesale': 'Kurangura',
+        'Bulk pricing': 'Igiciro cy\'abagura byinshi',
+        'Explore': 'Shakisha',
+        'Shop by Category': 'Gura ku Byiciro',
+        'Find exactly what you need from our curated collection of electronics and solar products.': 'Shaka neza icyo ukeneye mu bicuruzwa byacu byatoranyijwe.',
+        'LED Lighting': 'Amatara ya LED',
+        'Bulbs, Panels, Tubes': 'Amatara, Utubaho, Imiyoboro',
+        'Solar Products': 'Ibicuruzwa by\'Imirasire',
+        'Flood Lights, Home Kits': 'Amatara Manini, Ibikoresho byo mu Rugo',
+        'IT Accessories': 'Ibikoresho bya IT',
+        'Tablets, Keyboards': 'Tableti, Keyboards',
+        'Audio & TWS': 'Amajwi na TWS',
+        'Earbuds, Speakers': 'Ekuteri, Indangururamajwi',
+        'Featured': 'Ibyatoranyijwe',
+        'Our Products': 'Ibicuruzwa Byacu',
+        'View All →': 'Reba Byose →',
+        'Why Us': 'Impamvu Twebwe',
+        'Why Rwandans Trust Zon Corporation': 'Impamvu Abanyarwanda Bizera Zon Corporation',
+        'We\'ve built our reputation on genuine products, honest pricing, and reliable delivery.': 'Twubatse izina ryacu ku bicuruzwa nyakuri, ibiciro by\'ukuri, no gutanga byizewe.',
+        'Genuine Products Only': 'Ibicuruzwa Nyakuri Gusa',
+        'Every item sourced from trusted manufacturers.': 'Buri gicuruzwa kiva ku babikora bizewe.',
+        'Same-Day Delivery in Kigali': 'Gukora delivery uwo munsi i Kigali',
+        'Order before 3pm, receive today.': 'Tumiza mbere ya saa cyenda, ubone delivery yawe uwo munsi.',
+        'Wholesale & Retail': 'Kurangura no Kugurisha',
+        'Special pricing for bulk buyers.': 'Igiciro cyihariye ku bagura byinshi.',
+        'Real Warranty Support': 'Inkunga y\'Icyemezo Nyayo',
+        '1-2 year warranty on all products.': 'Icyemezo cy\'imyaka 1-2 ku bicuruzwa byose.',
+        'Customers': 'Abakiriya',
+        'Testimonials': 'Abemezakuri',
+        'What Our Customers Say': 'Icyo Abakiriya Bacu Bavuga',
+        'Ordered LED panels for my shop. Delivery was same-day and the quality is excellent.': 'Natumije amatara ya LED ku iduka ryanjye. Yatanzwe uwo munsi kandi afite ubuziranenge.',
+        'Bought solar lights for my home. Zon helped me choose the right ones. Highly recommend.': 'Naguze amatara y\'imirasire y\'izuba mu rugo rwanjye. Zon yamfashije guhitamo. Ndabashishikariza.',
+        'As a retailer, Zon is my go-to supplier. Wholesale prices are fair and stock is always available.': 'Nk\'umucuruzi, Zon ni we mutanga wanjye. Ibiciro by\'ikibazo ni byiza kandi ibicuruzwa bihari.',
+        'Shop Owner, Kigali': 'Nyir\'iduka, Kigali',
+        'Home Owner, Gasabo': 'Nyir\'urugo, Gasabo',
+        'Retailer, Nyarugenge': 'Umucuruzi, Nyarugenge',
+        'Follow Us on Instagram': 'Dukurikire kuri Instagram',
+        'See our latest arrivals, behind-the-scenes updates, and special offers.': 'Reba ibishya, amakuru y\'inyuma, n\'amatangazo yihariye.',
+        'Need Bulk Pricing?': 'Ukeneye Igiciro cy\'ikibazo?',
+        'We supply wholesalers and retailers across Rwanda. Get in touch for special wholesale rates.': 'Duha abacuruzi mu Rwanda hose. Twandikire kubona ibiciro byihariye.',
+        'Request Wholesale Quote': 'Saba Igiciro cy\'Ikibazo',
+        'Full Catalog': 'Urutonde Rwose',
+        'Shop All Products': 'Gura Ibicuruzwa Byose',
+        'Browse our complete collection.': 'Reba urutonde rwacu rwose.',
+        'Search': 'Shakisha',
+        'Find a product...': 'Shakisha igicuruzwa...',
+        'Categories': 'Ibyiciro',
+        'Availability': 'Kuboneka',
+        'In Stock Only': 'Ibihari Gusa',
+        'Reset Filters': 'Subiza Amashakiro',
+        'Sort by:': 'Tondeka:',
+        'Newest': 'Bishya',
+        'Price: Low to High': 'Igiciro: Gito kugeza Kinini',
+        'Price: High to Low': 'Igiciro: Kinini kugeza Gito',
+        'Name (A-Z)': 'Izina (A-Z)',
+        'No products found': 'Nta bicuruzwa byabonetse',
+        'Try adjusting your filters.': 'Gerageza guhindura amashakiro.',
+        'Shopping Cart': 'Agatebo',
+        'Your Cart': 'Agatebo Kawe',
+        'Your cart is empty': 'Agatebo kawe ni ubusa',
+        'Add products before checking out.': 'Ongeraho ibicuruzwa mbere yo kwishyura.',
+        'Start Shopping': 'Tangira Gura',
+        'Items': 'Ibintu',
+        'Clear All': 'Siba Byose',
+        'Order Summary': 'Incamake y\'Itumiza',
+        'Subtotal': 'Igiteranyo',
+        'Delivery': 'Gutanga',
+        'At checkout': 'Igihe cyo kwishyura',
+        'Total': 'Byose',
+        'Proceed to Checkout →': 'Komeza Kwishyura →',
+        'Continue Shopping': 'Komeza Gura',
+        'Almost There': 'Hafi Kugera',
+        'Checkout': 'Kwishyura',
+        'Browse Products': 'Reba Ibicuruzwa',
+        'Delivery Information': 'Amakuru yo Gutanga',
+        'Full Name *': 'Amazina Yombi *',
+        'Phone *': 'Telefoni *',
+        'Email': 'Imeyili',
+        'Delivery Address *': 'Aderesi yo Gutanga *',
+        'Delivery Zone *': 'Akarere ko Gutanga *',
+        'Kigali': 'Kigali',
+        'Outside Kigali': 'Hanze ya Kigali',
+        'Payment Method *': 'Uburyo bwo Kwishyura *',
+        'MTN Mobile Money': 'MTN Mobile Money',
+        'Airtel Money': 'Airtel Money',
+        'Cash on Delivery': 'Amafaranga ku Gutanga',
+        'Pay via *182#': 'Wishyure ukoresheje *182#',
+        'Pay when you receive': 'Wishyure igihe ubonye',
+        'Place Order →': 'Tumiza →',
+        'Order Placed!': 'Itumiza Ryatanzwe!',
+        'Thank you for shopping with Zon Corporation.': 'Murakoze kugura kuri Zon Corporation.',
+        'Your order number is:': 'Nimero y\'itumiza ryawe ni:',
+        'We\'ll contact you to confirm. If you chose Mobile Money, dial *182# to complete payment.': 'Tuzakwandikira kugira ngo twemeze. Niba wahisemo Mobile Money, kanda *182# kugira urangize kwishyura.',
+        'Back to Home': 'Subira Ahabanza',
+        '← Back to Shop': '← Subira ku Iduka',
+        'VAT included': 'Harimo VAT',
+        'Description': 'Ibisobanuro',
+        'High quality product from Zon Corporation Rwanda.': 'Igicuruzwa cy\'ubuziranenge cya Zon Corporation Rwanda.',
+        'Currently Out of Stock': 'Ntibihari ubu',
+        'Add to Cart': 'Ongeraho mu Gatebo',
+        'Stock Limit': 'Umubare ntarengwa',
+        'In Stock': 'Bihari',
+        'Low Stock': 'Bike',
+        'Out of Stock': 'Ntibihari',
+        'View →': 'Reba →',
+        'Quick Add': 'Ongeraho Byihuse',
+        'Our Story': 'Inkuru Yacu',
+        'About Zon Corporation': 'Ibitwerekeye Zon Corporation',
+        'A trusted name in technology and electronics trading across Rwanda.': 'Izina ryizewe mu bucuruzi bw\'ikoranabuhanga n\'ibikoresho mu Rwanda hose.',
+        'Who We Are': 'Turi Bandi',
+        'Your Partner in Power & Technology': 'Umufatanyabikorwa wawe mu Ngufu na Tekinoroji',
+        'Our mission is simple: make reliable, energy-efficient technology accessible to every Rwandan household and business.': 'Intego yacu ni yoroshye: gutuma ikoranabuhanga ryizewe kandi ryizigama ingufu riboneka ku ngo n\'ubucuruzi bwose bw\'u Rwanda.',
+        'Our Mission': 'Intego Yacu',
+        'Our Vision': 'Icyerekezo Cyacu',
+        'Our Values': 'Indangagaciro Zacu',
+        'To power Rwanda\'s homes and businesses with reliable, affordable technology.': 'Guha ingufu ingo n\'ubucuruzi by\'u Rwanda ikoranabuhanga ryizewe kandi rihendutse.',
+        'To become Rwanda\'s most trusted supplier of electronics and solar.': 'Kuba umutanga wizewe cyane w\'ibikoresho n\'imirasire y\'izuba mu Rwanda.',
+        'Quality, integrity, and customer satisfaction at every step.': 'Ubuziranenge, ubuhemu, n\'ubwuzuzanye bw\'abakiriya muri buri ntambwe.',
+        'We\'re Here to Help': 'Turi Hano Kugufasha',
+        'Get in Touch': 'Twandikire',
+        'Questions about products or delivery? Reach out anytime.': 'Ufite ibibazo ku bicuruzwa cyangwa gutanga? Twandikire igihe icyo ari cyo cyose.',
+        'Visit Us': 'Dusure',
+        'Call or WhatsApp': 'Hamagara cyangwa WhatsApp',
+        'Email Us': 'Twandikire Imeyili',
+        'Send Us a Message': 'Twoherereze Ubutumwa',
+        'We\'ll get back to you as soon as possible.': 'Tuzagusubiza vuba bishoboka.',
+        'Your Name *': 'Izina Ryawe *',
+        'Message *': 'Ubutumwa *',
+        'Send Message': 'Ohereza Ubutumwa',
+        'Quick Links': 'Ihuza Byihuse',
+        'About Us': 'Ibitwerekeyeho',
+        'Legal': 'Amategeko',
+        'Terms of Service': 'Amasezerano y\'Ubwiriza',
+        'Privacy Policy': 'Politiki y\'Ibanga',
+        'Refund Policy': 'Politiki yo Gusubiza',
+        'Shipping Policy': 'Politiki yo Gutanga',
+        'All rights reserved.': 'Uburenganzira bwose burafitwe.',
+        'Made with ❤️ in Kigali': 'Yakorewe mu ❤️ i Kigali',
+        'Added to Cart': 'Byongewe mw\'ikarito',
+        'Removed': 'Byakuweho',
+        'Removed from Cart': 'Byakuwe mw\'ikarito',
+        'Order Failed': 'Itumiza Ryonze',
+        'Message Sent': 'Ubutumwa Bwoherejwe',
+        'Connection Error': 'Ikibazo cy\'Ihuza',
+        'Could not load products.': 'Ntibishoboye gutangira ibicuruzwa.',
+        'Rwanda Ltd': 'Rwanda Ltd',
+        'ZON CORPORATION': 'ZON CORPORATION',
+        'General': 'Rusange'
+    };
 
-        async function placeOrder() {
-            const form = document.getElementById('checkout-form');
-            if (!form.checkValidity()) { form.reportValidity(); return; }
+    let currentLang = localStorage.getItem('zon-lang') || 'en';
+    const originalText = new WeakMap();
 
-            const btn = document.getElementById('place-order-btn');
-            btn.textContent = 'Placing Order...';
-            btn.disabled = true;
-
-            const subtotal = getCartTotal();
-            const fee = subtotal >= FREE_DELIVERY ? 0 : DELIVERY_FEES[currentZone];
-            const total = subtotal + fee;
-
-            const orderData = {
-                name: document.getElementById('co-name').value.trim(),
-                phone: document.getElementById('co-phone').value.trim(),
-                email: document.getElementById('co-email').value.trim(),
-                address: document.getElementById('co-address').value.trim(),
-                zone: currentZone,
-                deliveryFee: fee,
-                total: total,
-                paymentMethod: document.querySelector('input[name="payment"]:checked').value
-            };
-
-            const result = await submitOrder(orderData, zonCart);
-
-            if (result.success) {
-                document.getElementById('checkout-content').classList.add('hidden');
-                document.getElementById('order-success').classList.remove('hidden');
-                document.getElementById('success-order-number').textContent = result.orderNumber;
-                updateCartCount();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                showToast('Order Failed', result.error, 'error');
-                btn.textContent = 'Place Order →';
-                btn.disabled = false;
-            }
-        }
-
-        // Attach shop filters event listeners once loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            const searchInput = document.getElementById('shop-search');
-            const stockOnly = document.getElementById('shop-stock-only');
-            const sortSelect = document.getElementById('shop-sort');
-            const resetBtn = document.getElementById('shop-reset');
-
-            searchInput?.addEventListener('input', (e) => {
-                searchTerm = e.target.value;
-                applyShopFilters();
-            });
-
-            stockOnly?.addEventListener('change', (e) => {
-                inStockOnly = e.target.checked;
-                applyShopFilters();
-            });
-
-            sortSelect?.addEventListener('change', (e) => {
-                sortBy = e.target.value;
-                applyShopFilters();
-            });
-
-            resetBtn?.addEventListener('click', () => {
-                activeCategories = [];
-                searchTerm = '';
-                inStockOnly = false;
-                sortBy = 'newest';
-                searchInput.value = '';
-                stockOnly.checked = false;
-                sortSelect.value = 'newest';
-                document.querySelectorAll('.cat-checkbox').forEach(cb => cb.checked = false);
-                applyShopFilters();
-            });
-
-            document.getElementById('contact-form')?.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                showToast('Message Sent', 'We\'ll get back to you shortly.', 'success');
-                e.target.reset();
-            });
+    function updateToggleUI() {
+        document.querySelectorAll('#lang-toggle .lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === currentLang);
         });
+    }
+
+    function translateTextNode(node) {
+        const text = node.nodeValue;
+        if (!text || !text.trim()) return;
+        if (!originalText.has(node)) originalText.set(node, text);
+
+        const original = originalText.get(node);
+        const trimmed = original.trim();
+        const leading = original.match(/^\s*/)[0];
+        const trailing = original.match(/\s*$/)[0];
+
+        if (currentLang === 'en') {
+            if (node.nodeValue !== original) node.nodeValue = original;
+            return;
+        }
+
+        const translation = TRANSLATIONS[trimmed];
+        if (translation) {
+            const newText = leading + translation + trailing;
+            if (node.nodeValue !== newText) node.nodeValue = newText;
+        } else {
+            if (node.nodeValue !== original) node.nodeValue = original;
+        }
+    }
+
+    function walkAndTranslate(root) {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+            acceptNode: (node) => {
+                const parent = node.parentElement;
+                if (!parent) return NodeFilter.FILTER_REJECT;
+                const tag = parent.tagName;
+                if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        });
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(translateTextNode);
+    }
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        localStorage.setItem('zon-lang', lang);
+        document.documentElement.lang = lang === 'rw' ? 'rw' : 'en';
+        walkAndTranslate(document.body);
+        updateToggleUI();
+    }
+
+    document.querySelectorAll('#lang-toggle .lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (btn.dataset.lang !== currentLang) setLanguage(btn.dataset.lang);
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.documentElement.lang = currentLang === 'rw' ? 'rw' : 'en';
+        if (currentLang === 'rw') walkAndTranslate(document.body);
+        updateToggleUI();
+    });
+    </script>
+
+    <script>
+    (function initHeroCarousel() {
+        var carousel = document.getElementById('hero-carousel');
+        if (!carousel) return;
+        var images = ['/images/image1 (1).jpg','/images/image1 (2).jpg','/images/image1 (3).jpg','/images/image1 (4).jpg'];
+        carousel.innerHTML = images.map(function(src, i) {
+            return '<img src="' + encodeURI(src) + '" class="hero-slide' + (i === 0 ? ' active' : '') + '" alt="ZON Corporation">';
+        }).join('') + '<div class="hero-dots">' + images.map(function(_, i) {
+            return '<button class="hero-dot' + (i === 0 ? ' active' : '') + '" data-slide="' + i + '"></button>';
+        }).join('') + '</div>';
+
+        var slides = carousel.querySelectorAll('.hero-slide');
+        var dots = carousel.querySelectorAll('.hero-dot');
+        var cur = 0, timer = null;
+        function goTo(n) { slides.forEach(function(s, i) { s.classList.toggle('active', i === n); }); dots.forEach(function(d, i) { d.classList.toggle('active', i === n); }); cur = n; }
+        function next() { goTo((cur + 1) % slides.length); }
+        function start() { stop(); timer = setInterval(next, 6000); }
+        function stop() { if (timer) clearInterval(timer); }
+        dots.forEach(function(d, i) { d.addEventListener('click', function() { goTo(i); start(); }); });
+        carousel.addEventListener('mouseenter', stop);
+        carousel.addEventListener('mouseleave', start);
+        start();
+    })();
+
+    function setCategoryAndGo(slug) { activeCategories = [slug]; navigate('shop'); }
+
+    async function placeOrder() {
+        var form = document.getElementById('checkout-form');
+        if (!form.checkValidity()) { form.reportValidity(); return; }
+        var btn = document.getElementById('place-order-btn');
+        btn.textContent = 'Placing Order...';
+        btn.disabled = true;
+        var subtotal = getCartTotal();
+        var fee = subtotal >= FREE_DELIVERY ? 0 : DELIVERY_FEES[currentZone];
+        var total = subtotal + fee;
+        var orderData = {
+            name: document.getElementById('co-name').value.trim(),
+            phone: document.getElementById('co-phone').value.trim(),
+            email: document.getElementById('co-email').value.trim(),
+            address: document.getElementById('co-address').value.trim(),
+            zone: currentZone,
+            deliveryFee: fee,
+            total: total,
+            paymentMethod: document.querySelector('input[name="payment"]:checked').value
+        };
+        var result = await submitOrder(orderData, zonCart);
+        if (result.success) {
+            document.getElementById('checkout-content').classList.add('hidden');
+            document.getElementById('order-success').classList.remove('hidden');
+            document.getElementById('success-order-number').textContent = result.orderNumber;
+            updateCartCount();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            showToast('Order Failed', result.error, 'error');
+            btn.textContent = 'Place Order →';
+            btn.disabled = false;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('contact-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showToast('Message Sent', "We'll get back to you shortly.", 'success');
+            e.target.reset();
+        });
+        var searchInput = document.getElementById('shop-search');
+        var stockOnly = document.getElementById('shop-stock-only');
+        var sortSelect = document.getElementById('shop-sort');
+        var resetBtn = document.getElementById('shop-reset');
+        searchInput?.addEventListener('input', function(e) { searchTerm = e.target.value; applyShopFilters(); });
+        stockOnly?.addEventListener('change', function(e) { inStockOnly = e.target.checked; applyShopFilters(); });
+        sortSelect?.addEventListener('change', function(e) { sortBy = e.target.value; applyShopFilters(); });
+        resetBtn?.addEventListener('click', function() {
+            activeCategories = []; searchTerm = ''; inStockOnly = false; sortBy = 'newest';
+            searchInput.value = ''; stockOnly.checked = false; sortSelect.value = 'newest';
+            document.querySelectorAll('.cat-checkbox').forEach(function(cb) { cb.checked = false; });
+            applyShopFilters();
+        });
+    });
     </script>
 </body>
 </html>
