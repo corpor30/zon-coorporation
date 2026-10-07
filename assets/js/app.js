@@ -1,8 +1,7 @@
 /* ==========================================================================
-   ZON CORPORATION RWANDA — MAIN APP (clean rewrite)
+   ZON CORPORATION RWANDA — MAIN APP (clean)
    ========================================================================== */
 
-// ===== Supabase Connection =====
 const SUPABASE_URL = 'https://vnmvpgigriqwgjibddal.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZubXZwZ2lncmlxd2dqaWJkZGFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzNzY0MDAsImV4cCI6MjEwNjk1MjQwMH0.GBsPmxSuyXpUmTDhl_BqYj1bR79j7-XYHTPMm88pH-M';
 
@@ -13,7 +12,6 @@ if (typeof window.supabase !== 'undefined') {
     console.error('[app] Supabase library not loaded');
 }
 
-// ===== State =====
 let zonCart = JSON.parse(localStorage.getItem('zonCart')) || [];
 let allProducts = [];
 let activeCategories = [];
@@ -26,7 +24,6 @@ let currentZone = 'kigali';
 const DELIVERY_FEES = { kigali: 2000, outside: 5000 };
 const FREE_DELIVERY = 50000;
 
-// ===== Helpers =====
 function formatRWF(amount) {
     return new Intl.NumberFormat('en-RW', { style: 'currency', currency: 'RWF', minimumFractionDigits: 0 }).format(amount || 0);
 }
@@ -73,7 +70,6 @@ function runPageLoader() {
     setTimeout(() => { bar.style.opacity = '0'; }, 700);
 }
 
-// ===== Supabase Fetchers =====
 async function fetchProducts() {
     if (!db) return [];
     try {
@@ -146,7 +142,6 @@ async function submitOrder(orderData, items) {
     }
 }
 
-// ===== Cart =====
 function addToCart(product, quantity = 1) {
     const existing = zonCart.find(i => i.id === product.id);
     if (existing) existing.quantity += quantity;
@@ -205,7 +200,6 @@ function updateCartQty(id, delta) {
     renderCart();
 }
 
-// ===== Router =====
 function navigate(page, param = null) {
     runPageLoader();
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -223,7 +217,8 @@ function navigate(page, param = null) {
         el.classList.toggle('active', el.dataset.nav === page);
     });
 
-    document.getElementById('mobile-menu')?.classList.remove('open');
+    const mobileMenu = document.getElementById('mobile-menu');
+    if (mobileMenu) mobileMenu.classList.remove('open');
 
     if (page === 'home') renderHome();
     else if (page === 'shop') renderShop();
@@ -232,13 +227,11 @@ function navigate(page, param = null) {
     else if (page === 'checkout') renderCheckout();
 }
 
-// ===== Home =====
 async function renderHome() {
     if (allProducts.length === 0) allProducts = await fetchProducts();
     renderProductGrid(allProducts.slice(0, 8), 'home-product-grid');
 }
 
-// ===== Shop =====
 async function renderShop() {
     if (allProducts.length === 0) allProducts = await fetchProducts();
     renderCategoryFilters();
@@ -292,7 +285,6 @@ function applyShopFilters() {
     }
 }
 
-// ===== Product Detail =====
 async function renderProductDetail(id) {
     const container = document.getElementById('product-detail-content');
     if (!container) return;
@@ -349,7 +341,6 @@ function addCurrentToCart() {
     if (currentProduct) addToCart(currentProduct, qty);
 }
 
-// ===== Cart Page =====
 function renderCart() {
     const empty = document.getElementById('cart-empty');
     const content = document.getElementById('cart-content');
@@ -386,7 +377,6 @@ function renderCart() {
     if (totEl) totEl.textContent = formatRWF(subtotal);
 }
 
-// ===== Checkout =====
 function renderCheckout() {
     const empty = document.getElementById('checkout-empty');
     const content = document.getElementById('checkout-content');
@@ -425,7 +415,6 @@ function updateCheckoutSummary() {
     if (totEl) totEl.textContent = formatRWF(total);
 }
 
-// ===== Product Grid =====
 function renderProductGrid(products, containerId) {
     const container = document.getElementById(containerId);
     if (!container) return;
@@ -457,7 +446,7 @@ function renderProductGrid(products, containerId) {
     }).join('');
 }
 
-// ===== Init =====
+// ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
     runPageLoader();
     updateCartCount();
@@ -470,9 +459,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const state = e.state;
         if (state) navigate(state.page, state.param);
     });
+
+    // Contact form
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('Message Sent', "We'll get back to you shortly.", 'success');
+            e.target.reset();
+        });
+    }
+
+    // Shop filters
+    const searchInput = document.getElementById('shop-search');
+    const stockOnly = document.getElementById('shop-stock-only');
+    const sortSelect = document.getElementById('shop-sort');
+    const resetBtn = document.getElementById('shop-reset');
+
+    if (searchInput) searchInput.addEventListener('input', (e) => { searchTerm = e.target.value; applyShopFilters(); });
+    if (stockOnly) stockOnly.addEventListener('change', (e) => { inStockOnly = e.target.checked; applyShopFilters(); });
+    if (sortSelect) sortSelect.addEventListener('change', (e) => { sortBy = e.target.value; applyShopFilters(); });
+    if (resetBtn) resetBtn.addEventListener('click', () => {
+        activeCategories = []; searchTerm = ''; inStockOnly = false; sortBy = 'newest';
+        if (searchInput) searchInput.value = '';
+        if (stockOnly) stockOnly.checked = false;
+        if (sortSelect) sortSelect.value = 'newest';
+        document.querySelectorAll('.cat-checkbox').forEach(cb => cb.checked = false);
+        applyShopFilters();
+    });
 });
 
-// ===== Expose to global scope for inline handlers =====
 window.navigate = navigate;
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
@@ -484,4 +500,6 @@ window.updateCheckoutSummary = updateCheckoutSummary;
 window.formatRWF = formatRWF;
 window.showToast = showToast;
 window.getCartTotal = getCartTotal;
-window.getCartTotal = getCartTotal;
+window.DELIVERY_FEES = DELIVERY_FEES;
+window.FREE_DELIVERY = FREE_DELIVERY;
+window.currentZone = currentZone;
