@@ -4,7 +4,6 @@
    before going live.
    ========================================================================== */
 
-// ===== Kinyarwanda Dictionary =====
 const TRANSLATIONS = {
     // --- Navbar ---
     'Home': 'Ahabanza',
@@ -13,8 +12,8 @@ const TRANSLATIONS = {
     'Contact': 'Twandikire',
 
     // --- Marquee ---
-    'Same-Day Delivery in Kigali': 'Gutanga uwo munsi iKigali',
-    'Wholesale Pricing Available': 'Igiciro cyo\'kubaza kirahari',
+    'Same-Day Delivery in Kigali': 'Gutanga uwo munsi i Kigali',
+    'Wholesale Pricing Available': 'Igiciro cy\'ikibazo kirahari',
     '1-2 Year Warranty on All Products': 'Icyemezo cy\'imyaka 1-2 ku bicuruzwa byose',
     'Genuine Electronics Guaranteed': 'Ibikoresho by\'ukuri birateganyijwe',
     'Gisozi, Kigali, Rwanda': 'Gisozi, Kigali, u Rwanda',
@@ -32,14 +31,13 @@ const TRANSLATIONS = {
     'Support': 'Inkunga',
 
     // --- Trust cards ---
-    'Genuine': 'Nyakuri',
     'Sourced directly': 'Biva ku kigo',
-    'Fast Delivery': 'delivery zihuse',
+    'Fast Delivery': 'Delivery zihuse',
     'Same-day Kigali': 'Uwo munsi i Kigali',
     'Warranty': 'Icyemezo',
     '1-2 Year': 'Umwaka 1-2',
     'Wholesale': 'Kurangura',
-    'Bulk pricing': 'Igiciro cyabagura byinshi',
+    'Bulk pricing': 'Igiciro cy\'abagura byinshi',
 
     // --- Categories ---
     'Explore': 'Shakisha',
@@ -50,9 +48,9 @@ const TRANSLATIONS = {
     'Solar Products': 'Ibicuruzwa by\'Imirasire',
     'Flood Lights, Home Kits': 'Amatara Manini, Ibikoresho byo mu Rugo',
     'IT Accessories': 'Ibikoresho bya IT',
-    'Tablets, Keyboards': 'Tableti, keyboards',
+    'Tablets, Keyboards': 'Tableti, Keyboards',
     'Audio & TWS': 'Amajwi na TWS',
-    'Earbuds, Speakers': 'ekuteri, Indangururamajwi',
+    'Earbuds, Speakers': 'Ekuteri, Indangururamajwi',
 
     // --- Featured products ---
     'Featured': 'Ibyatoranyijwe',
@@ -64,7 +62,7 @@ const TRANSLATIONS = {
     'Why Rwandans Trust Zon Corporation': 'Impamvu Abanyarwanda Bizera Zon Corporation',
     'We\'ve built our reputation on genuine products, honest pricing, and reliable delivery.': 'Twubatse izina ryacu ku bicuruzwa nyakuri, ibiciro by\'ukuri, no gutanga byizewe.',
     'Genuine Products Only': 'Ibicuruzwa Nyakuri Gusa',
-    'Every item sourced from trusted manufacturers.': 'Buri gicuruzwa kiva kubabikora bizewe.',
+    'Every item sourced from trusted manufacturers.': 'Buri gicuruzwa kiva ku babikora bizewe.',
     'Same-Day Delivery in Kigali': 'Gukora delivery uwo munsi i Kigali',
     'Order before 3pm, receive today.': 'Tumiza mbere ya saa cyenda, ubone delivery yawe uwo munsi.',
     'Wholesale & Retail': 'Kurangura no Kugurisha',
@@ -74,7 +72,7 @@ const TRANSLATIONS = {
     'Customers': 'Abakiriya',
 
     // --- Testimonials ---
-    'Testimonials': 'abemezakuri',
+    'Testimonials': 'Abemezakuri',
     'What Our Customers Say': 'Icyo Abakiriya Bacu Bavuga',
     'Ordered LED panels for my shop. Delivery was same-day and the quality is excellent.': 'Natumije amatara ya LED ku iduka ryanjye. Yatanzwe uwo munsi kandi afite ubuziranenge.',
     'Bought solar lights for my home. Zon helped me choose the right ones. Highly recommend.': 'Naguze amatara y\'imirasire y\'izuba mu rugo rwanjye. Zon yamfashije guhitamo. Ndabashishikariza.',
@@ -88,7 +86,7 @@ const TRANSLATIONS = {
     'See our latest arrivals, behind-the-scenes updates, and special offers.': 'Reba ibishya, amakuru y\'inyuma, n\'amatangazo yihariye.',
 
     // --- Wholesale CTA ---
-    'Need Bulk Pricing?': 'Ukeneye Igiciro cyabaranguzi,
+    'Need Bulk Pricing?': 'Ukeneye Igiciro cy\'ikibazo?',
     'We supply wholesalers and retailers across Rwanda. Get in touch for special wholesale rates.': 'Duha abacuruzi mu Rwanda hose. Twandikire kubona ibiciro byihariye.',
     'Request Wholesale Quote': 'Saba Igiciro cy\'Ikibazo',
 
@@ -203,14 +201,13 @@ const TRANSLATIONS = {
     'Privacy Policy': 'Politiki y\'Ibanga',
     'Refund Policy': 'Politiki yo Gusubiza',
     'Shipping Policy': 'Politiki yo Gutanga',
-    'Contact': 'Twandikire',
     'All rights reserved.': 'Uburenganzira bwose burafitwe.',
     'Made with ❤️ in Kigali': 'Yakorewe mu ❤️ i Kigali',
 
     // --- Toasts ---
-    'Added to Cart': 'Byongewe mw\'ikarito,
+    'Added to Cart': 'Byongewe mw\'ikarito',
     'Removed': 'Byakuweho',
-    'Removed from Cart': 'Byakuwe mw\'ikarito,
+    'Removed from Cart': 'Byakuwe mw\'ikarito',
     'Order Failed': 'Itumiza Ryonze',
     'Message Sent': 'Ubutumwa Bwoherejwe',
     'Connection Error': 'Ikibazo cy\'Ihuza',
@@ -220,7 +217,7 @@ const TRANSLATIONS = {
     'Rwanda Ltd': 'Rwanda Ltd',
     'ZON CORPORATION': 'ZON CORPORATION',
     'General': 'Rusange',
-    'Support': 'ugufasha',
+    'Support': 'Ugufasha',
 };
 
 // ===== Language State =====
@@ -234,64 +231,22 @@ function injectLanguageToggle() {
 
     const toggle = document.createElement('div');
     toggle.id = 'lang-toggle';
-    toggle.innerHTML = `
-        <button class="lang-btn" data-lang="en">EN</button>
-        <button class="lang-btn" data-lang="rw">RW</button>
-    `;
-    // Insert before the cart icon
-    const cartWrapper = navContainer.querySelector('.flex.items-center.gap-4');
-    if (cartWrapper) {
-        navContainer.insertBefore(toggle, cartWrapper);
-    } else {
-        navContainer.appendChild(toggle);
-    }
+    toggle.innerHTML = '<button class="lang-btn" data-lang="en">EN</button><button class="lang-btn" data-lang="rw">RW</button>';
 
-    // Inject styles
+    const cartWrapper = navContainer.querySelector('.flex.items-center.gap-4');
+    if (cartWrapper) navContainer.insertBefore(toggle, cartWrapper);
+    else navContainer.appendChild(toggle);
+
     if (!document.getElementById('lang-toggle-style')) {
         const style = document.createElement('style');
         style.id = 'lang-toggle-style';
-        style.textContent = `
-            #lang-toggle {
-                display: inline-flex;
-                background: var(--zon-bg-muted, #F4F4F8);
-                border-radius: 999px;
-                padding: 3px;
-                gap: 2px;
-                margin-left: auto;
-                margin-right: 12px;
-            }
-            .lang-btn {
-                border: none;
-                background: transparent;
-                padding: 6px 14px;
-                border-radius: 999px;
-                font-size: 0.75rem;
-                font-weight: 700;
-                letter-spacing: 0.05em;
-                color: #78716C;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                font-family: var(--font-body, sans-serif);
-            }
-            .lang-btn:hover { color: var(--zon-primary, #6C5CE7); }
-            .lang-btn.active {
-                background: white;
-                color: var(--zon-primary, #6C5CE7);
-                box-shadow: 0 2px 8px rgba(11, 13, 23, 0.08);
-            }
-            @media (max-width: 768px) {
-                #lang-toggle { margin-right: 8px; }
-                .lang-btn { padding: 5px 10px; font-size: 0.7rem; }
-            }
-        `;
+        style.textContent = '#lang-toggle{display:inline-flex;background:#F4F4F8;border-radius:999px;padding:3px;gap:2px;margin-left:auto;margin-right:12px}.lang-btn{border:none;background:transparent;padding:6px 14px;border-radius:999px;font-size:.75rem;font-weight:700;letter-spacing:.05em;color:#78716C;cursor:pointer;transition:all .2s ease;font-family:Inter,sans-serif}.lang-btn:hover{color:#6C5CE7}.lang-btn.active{background:white;color:#6C5CE7;box-shadow:0 2px 8px rgba(11,13,23,.08)}@media(max-width:768px){#lang-toggle{margin-right:8px}.lang-btn{padding:5px 10px;font-size:.7rem}}';
         document.head.appendChild(style);
     }
 
-    // Bind click handlers
     toggle.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            const lang = btn.dataset.lang;
-            if (lang !== currentLang) setLanguage(lang);
+            if (btn.dataset.lang !== currentLang) setLanguage(btn.dataset.lang);
         });
     });
 
@@ -308,11 +263,7 @@ function updateToggleUI() {
 function translateTextNode(node) {
     const text = node.nodeValue;
     if (!text || !text.trim()) return;
-
-    // Store original on first pass
-    if (!originalText.has(node)) {
-        originalText.set(node, text);
-    }
+    if (!originalText.has(node)) originalText.set(node, text);
 
     const original = originalText.get(node);
     const trimmed = original.trim();
@@ -329,32 +280,25 @@ function translateTextNode(node) {
         const newText = leading + translation + trailing;
         if (node.nodeValue !== newText) node.nodeValue = newText;
     } else {
-        // No translation available — restore original
         if (node.nodeValue !== original) node.nodeValue = original;
     }
 }
 
 function walkAndTranslate(root) {
-    const walker = document.createTreeWalker(
-        root,
-        NodeFilter.SHOW_TEXT,
-        {
-            acceptNode: (node) => {
-                const parent = node.parentElement;
-                if (!parent) return NodeFilter.FILTER_REJECT;
-                const tag = parent.tagName;
-                if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') return NodeFilter.FILTER_REJECT;
-                return NodeFilter.FILTER_ACCEPT;
-            }
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode: (node) => {
+            const parent = node.parentElement;
+            if (!parent) return NodeFilter.FILTER_REJECT;
+            const tag = parent.tagName;
+            if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
         }
-    );
-
+    });
     const nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach(translateTextNode);
 }
 
-// ===== Public API =====
 function setLanguage(lang) {
     currentLang = lang;
     localStorage.setItem('zon-lang', lang);
@@ -363,33 +307,25 @@ function setLanguage(lang) {
     updateToggleUI();
 }
 
-// ===== MutationObserver for dynamic content (product grid, cart, etc.) =====
 function startObserver() {
     const observer = new MutationObserver((mutations) => {
         if (currentLang === 'en') return;
         mutations.forEach(m => {
             m.addedNodes.forEach(node => {
-                if (node.nodeType === Node.ELEMENT_NODE) {
-                    walkAndTranslate(node);
-                } else if (node.nodeType === Node.TEXT_NODE) {
-                    translateTextNode(node);
-                }
+                if (node.nodeType === Node.ELEMENT_NODE) walkAndTranslate(node);
+                else if (node.nodeType === Node.TEXT_NODE) translateTextNode(node);
             });
         });
     });
     observer.observe(document.body, { childList: true, subtree: true });
 }
 
-// ===== Initialize =====
 document.addEventListener('DOMContentLoaded', () => {
     injectLanguageToggle();
     document.documentElement.lang = currentLang === 'rw' ? 'rw' : 'en';
-    if (currentLang === 'rw') {
-        walkAndTranslate(document.body);
-    }
+    if (currentLang === 'rw') walkAndTranslate(document.body);
     startObserver();
 });
 
-// Expose for inline use
 window.setLanguage = setLanguage;
 window.t = (key) => (currentLang === 'rw' && TRANSLATIONS[key]) ? TRANSLATIONS[key] : key;
